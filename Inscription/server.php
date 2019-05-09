@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//Inscription
 //Initialisation des variables
 $pseudo = "";
 $adresse = "";
@@ -62,6 +62,33 @@ $bdd = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
    
 	}
    
+   //Se Connecter
+   if (isset($_POST['login_user'])) {
+  $pseudo = mysqli_real_escape_string($bdd, $_POST['pseudo']);
+  $password = mysqli_real_escape_string($bdd, $_POST['password']);
+
+  if (empty($pseudo)) {
+  	array_push($errors, "Le pseudpnyme est requis");
+  }
+  if (empty($password)) {
+  	array_push($errors, "Le mot de passe est requis");
+  }
+
+  if (count($errors) == 0) {
+  	
+  	$query = "SELECT * FROM users WHERE pseudo='$pseudo' AND password='$password'";
+  	$results = mysqli_query($bdd, $query);
+  	if (mysqli_num_rows($results) == false) {
+  	  $_SESSION['pseudo'] = $pseudo;
+  	  $_SESSION['success'] = "Vous etes connecté";
+  	  header('location: index.php');
+  	}else {
+  		array_push($errors, "Le pseudonyme ou le mot de passe est incorect");
+  	}
+  }
+}
+
+?>
    
    
    
