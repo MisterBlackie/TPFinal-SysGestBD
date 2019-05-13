@@ -28,3 +28,17 @@ CREATE PROCEDURE deleteUser(IN Ppseudo VARCHAR(30))
 BEGIN
 	DELETE FROM membre WHERE pseudo=Ppseudo;
 END |
+
+DROP PROCEDURE IF EXISTS IsAdmin;
+DELIMITER |
+CREATE FUNCTION IsAdmin(PPseudo VARCHAR(30)) RETURNS BOOL
+BEGIN
+	DECLARE isAdmin TINYINT(4);
+	SELECT Membre.isAdmin INTO isAdmin FROM Membre WHERE pseudo = PPseudo;
+    
+    IF isAdmin = 1 THEN
+		RETURN TRUE;
+    ELSE
+		RETURN FALSE;
+    END IF;
+END |

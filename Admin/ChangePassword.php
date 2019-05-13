@@ -15,6 +15,7 @@
 				<input type = "text" name = "User" value = "<?php echo $_GET["user"] ?>" style = "display: none;">
 				Changer le mot de passe de <?php echo $_GET["user"] ?> <br/>
 				<input type = "text" id = "PwdField" name = "newPassword"><br/>
+				Confirmation: <br/>
 				<input type = "text" id = "ConfirmPwd"><br/><br/>
 				<input type = "submit" name = "ChangePassword.Change" value = "Submit" onclick = "return CheckPasswordAndConfirmation()">
 			</form>
@@ -31,7 +32,7 @@
 			if (pwd.equals(pwdConfirmation)) {
 				return true;
 			} else {
-				// Erreur mot de passe pas pareil
+				alert("Le mot de passe ne correspond pas à la confirmation.");
 			}
 		} else {
 			// Erreur password vide
