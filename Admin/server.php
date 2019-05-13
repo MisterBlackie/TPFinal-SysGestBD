@@ -1,9 +1,15 @@
 <?php
 	session_start();
+	include ("../DBFunction.php");
+	
+	if (!isAdmin($_SESSION['pseudo'])) {
+		header("Location: AccessDenied.php");
+		exit(); 
+	}
 	
 	if (isset($_POST["DeleteUser"])) {
 		$user = $_POST["DeleteUser"];
-		echo("$user");
+		deleteUser($user);
 	}
 	
 	if (isset($_POST["ReloadPwd"])) {
@@ -12,7 +18,15 @@
 		exit();
 	}
 	
-	if (isset($_POST["ChangePassword.Change"])) {
+	if (isset($_POST["ChangePassword"])) {
+		$user = $_POST["User"];
+		$newPwd = $_POST["newPassword"];
 		
+		if ($newPwd != null) {
+			updatePassword($user, $newPwd);
+		}
+		
+		header("Location: Admin.php");
+		exit();
 	}
 ?>

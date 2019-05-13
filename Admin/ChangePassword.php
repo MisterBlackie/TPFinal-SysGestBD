@@ -1,4 +1,6 @@
 <?php
+	include ("server.php");
+	
 	if (!isset($_GET["user"])) {
 		exit();
 	}
@@ -17,7 +19,7 @@
 				<input type = "text" id = "PwdField" name = "newPassword"><br/>
 				Confirmation: <br/>
 				<input type = "text" id = "ConfirmPwd"><br/><br/>
-				<input type = "submit" name = "ChangePassword.Change" value = "Submit" onclick = "return CheckPasswordAndConfirmation()">
+				<input type = "submit" name = "ChangePassword" value = "Submit" onclick = "return CheckPasswordAndConfirmation()">
 			</form>
 		</main>
 	</body>

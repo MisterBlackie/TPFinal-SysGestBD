@@ -29,16 +29,19 @@ BEGIN
 	DELETE FROM membre WHERE pseudo=Ppseudo;
 END |
 
-DROP PROCEDURE IF EXISTS IsAdmin;
+
+DROP FUNCTION IF EXISTS IsAdmin;
 DELIMITER |
-CREATE FUNCTION IsAdmin(PPseudo VARCHAR(30)) RETURNS BOOL
+CREATE FUNCTION IsAdmin(PPseudo VARCHAR(30)) RETURNS TINYINT
 BEGIN
 	DECLARE isAdmin TINYINT(4);
 	SELECT Membre.isAdmin INTO isAdmin FROM Membre WHERE pseudo = PPseudo;
-    
-    IF isAdmin = 1 THEN
-		RETURN TRUE;
-    ELSE
-		RETURN FALSE;
-    END IF;
+    return isAdmin;
+END |
+
+DROP PROCEDURE IF EXISTS UpdatePassword;
+DELIMITER |
+CREATE PROCEDURE UpdatePassword(IN PPseudo VARCHAR(30), IN PPassword VARCHAR(45))
+BEGIN
+	UPDATE Membre SET Password = PPassword WHERE Pseudo = PPseudo;
 END |
