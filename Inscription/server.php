@@ -6,23 +6,23 @@ $pseudo = "";
 $adresse = "";
 $nom = "";
 $prenom = "";
+$password_1= "";
+$password_2="";
 $errors = array();
 
-//$bdd = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
-$bdd = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
+$bdd = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
     //echo('connexion reussie');
-	
-	//echo ('insertion avec paramètres') . '<br/>';
+
 	if (isset($_POST['Sub_User'])) {
-  // receive all input values from the form
-  $pseudo = mysqli_real_escape_string($bdd, $_POST['pseudo']);
-  $password_1 = mysqli_real_escape_string($bdd, $_POST['password_1']);
-  $password_2 = mysqli_real_escape_string($bdd, $_POST['password_2']);
-  $nom = mysqli_real_escape_string($bdd, $_POST['nom']);
-  $prenom = mysqli_real_escape_string($bdd, $_POST['prenom']);
-  $adresse = mysqli_real_escape_string($bdd, $_POST['adresse']);
-  
-  
+		
+		$pseudo =$_POST['pseudo'];
+		
+  $password_1 =  $_POST['password_1'];
+  $password_2 =  $_POST['password_2'];
+  $nom =  $_POST['nom'];
+  $prenom =  $_POST['prenom'];
+  $adresse =  $_POST['adresse'];
+		
    // form validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
   if (empty($pseudo)) { array_push($errors, "pseudonyme requis"); }
@@ -37,9 +37,12 @@ $bdd = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
    
     // first check the database to make sure 
   // a user does not already exist with the same username and/or email
-  $user_check_query = "SELECT * FROM Membre WHERE pseudo='$pseudo' OR adresse='$adresse' LIMIT 1";
-  $result = mysqli_query($bdd, $user_check_query);
-  $user = mysqli_fetch_assoc($result);
+  $stmt1 = $bdd->prepare("SELECT * FROM Membre WHERE pseudo='$pseudo' OR adresse='$adresse' LIMIT 1");
+  
+  
+  $stmt1->execute([$pseudo,$adresse]); 
+ 
+  $user = $stmt1->fetch();
   
   if ($user) { // if user exists
     if ($user['pseudo'] === $pseudo) {
@@ -54,18 +57,27 @@ $bdd = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
     if (count($errors) == 0) {
   $password = $password_1;
  
-	  $query = "INSERT INTO Membre (pseudo, password, nom , prenom ,adresse , isAdmin) 
-  			  VALUES('$pseudo','$password' , '$nom' , '$prenom' , '$adresse' , '0')";
-  	mysqli_query($bdd, $query);
-	echo($query);
-  }
+	  $stmt1 = $bdd->prepare("INSERT INTO Membre(pseudo, password, nom , prenom ,adresse , isAdmin) VALUES(?,?,?,?,?,?)");
+	
+	$stmt1->bindParam(1,$pseudo);
+	$stmt1->bindParam(2,$password);
+	$stmt1->bindParam(3,$nom);
+	$stmt1->bindParam(4,$prenom);
+	$stmt1->bindParam(5,$adresse);
+	$stmt1->bindParam(6,$isAdmin);
+	
+	$isAdmin = 0;
+  	$stmt1->execute(); 
+	header('location: login.php');
+	
+  
    
 	}
-   
+	}
    //Se Connecter
    if (isset($_POST['login_user'])) {
-  $pseudo = mysqli_real_escape_string($bdd, $_POST['pseudo']);
-  $password = mysqli_real_escape_string($bdd, $_POST['password']);
+  $pseudo = $_POST['pseudo'];
+  $password = $_POST['password'];
 
   if (empty($pseudo)) {
   	array_push($errors, "Le pseudpnyme est requis");
@@ -76,9 +88,15 @@ $bdd = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
 
   if (count($errors) == 0) {
   	
-  	$query = "SELECT * FROM users WHERE pseudo='$pseudo' AND password='$password'";
-  	$results = mysqli_query($bdd, $query);
-  	if (mysqli_num_rows($results) == false) {
+  	
+	$stmt1 = $bdd->prepare("SELECT * FROM Membre WHERE pseudo='$pseudo' AND password='$password'");
+  
+ $stmt1->execute([$pseudo,$adresse]); 
+ 
+  $user = $stmt1->fetch();
+  $results= $stmt1->rowCount();
+  	
+  	if ($results == 1) {
   	  $_SESSION['pseudo'] = $pseudo;
   	  $_SESSION['success'] = "Vous etes connecté";
   	  header('location: index.php');
@@ -88,13 +106,8 @@ $bdd = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
   }
 }
 
+ 
+
+
 ?>
-   
-   
-   
-   
-   
-   
-   
-   
    
