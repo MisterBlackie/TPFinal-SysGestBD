@@ -5,15 +5,16 @@
 		$users = getUsers();
 		
 		foreach($users as $user) {
-			if ($user[0] != $_SESSION['pseudo']) {
-				echo("<tr>");
-				echo("<td>$user[0]</td>");
-				echo("<td>$user[1]</td>");
-				echo("<td>$user[2]</td>");
-				echo("<td><button type = 'submit' form = 'AdminForm' class = 'btn' name = 'ReloadPwd' value = '$user[0]'><span class='glyphicon glyphicon-refresh'/></button></td>");
-				echo("<td><button type = 'submit' form = 'AdminForm' class = 'btn' name = 'DeleteUser' value = '$user[0]' onclick = 'return ConfirmDelete(\"$user[0]\")'><span class='glyphicon glyphicon-remove'/></button></td>");
-				echo("</tr>");
-			}
+			if ($user[0] == $_SESSION['pseudo'])
+				continue;
+			
+			echo("<tr>");
+			echo("<td>$user[0]</td>");
+			echo("<td>$user[1]</td>");
+			echo("<td>$user[2]</td>");
+			echo("<td><button type = 'submit' form = 'AdminForm' class = 'btn' name = 'ReloadPwd' value = '$user[0]'><span class='glyphicon glyphicon-refresh'/></button></td>");
+			echo("<td><button type = 'submit' form = 'AdminForm' class = 'btn' name = 'DeleteUser' value = '$user[0]' onclick = 'return ConfirmDelete(\"$user[0]\")'><span class='glyphicon glyphicon-remove'/></button></td>");
+			echo("</tr>");
 		}
 	}
 	
