@@ -31,13 +31,14 @@
 		let pwdConfirmation = document.getElementById("ConfirmPwd").value;
 		
 		if (pwd.trim() != "" && pwdConfirmation.trim() != "") {
-			if (pwd.equals(pwdConfirmation)) {
+			//if (pwd.equals(pwdConfirmation)) {
+			if (pwd === pwdConfirmation) {
 				return true;
 			} else {
 				alert("Le mot de passe ne correspond pas à la confirmation.");
 			}
 		} else {
-			// Erreur password vide
+			alert("Mot de passe vide.");
 		}
 		
 		return false;
