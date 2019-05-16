@@ -45,3 +45,17 @@ CREATE PROCEDURE UpdatePassword(IN PPseudo VARCHAR(30), IN PPassword VARCHAR(45)
 BEGIN
 	UPDATE Membre SET Password = PPassword WHERE Pseudo = PPseudo;
 END |
+
+DROP PROCEDURE IF EXISTS getUser;
+DELIMITER |
+CREATE PROCEDURE getUser(IN PPseudo VARCHAR(30))
+BEGIN
+	SELECT Pseudo, Prenom, Nom, Adresse, IsAdmin FROM Membre;
+END |
+
+DROP PROCEDURE IF EXISTS getImage;
+DELIMITER |
+CREATE PROCEDURE getImage(IN PIdImage INT(11))
+BEGIN
+	SELECT Titre, Description, Url, Membre_Pseudo FROM Image;
+END |

@@ -1,8 +1,11 @@
 ﻿<?php
-	
+
+    function getNewConnection() {
+        return new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
+    }
 	// getUsers: retourne la liste des membres
 	function getUsers() {
-		$conn = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
+		$conn = getNewConnection();
 		
 		$call = $conn->prepare("CALL getUsers()", array(PDO::ATTR_CURSOR, PDO::CURSOR_FWDONLY));
 		$call->execute();
@@ -13,7 +16,7 @@
 	
 	// deleteUser: supprime le membre dans la base de donnée
 	function deleteUser($Pseudo) {
-		$conn = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
+		$conn = getNewConnection();
 		
 		$call = $conn->prepare("CALL deleteUser(?)");
 		$call->bindParam(1, $Pseudo);
@@ -25,7 +28,7 @@
 	
 	// isAdmin: retourne un booléen qui indique si un membre est admin ou non
 	function isAdmin($Pseudo) {
-		$conn = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
+		$conn = getNewConnection();
 		
 		$call = $conn->prepare("SELECT IsAdmin(?)");
 		$call->bindParam(1, $Pseudo);
@@ -40,7 +43,7 @@
 	
 	// Change le mot de passe d'un membre
 	function updatePassword($Pseudo, $NewPwd) {
-		$conn = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
+		$conn = getNewConnection();
 		
 		$call = $conn->prepare("CALL UpdatePassword(?,?)");
 	
@@ -52,4 +55,17 @@
 		
 		$conn = null;
 	}
+
+	function getImage($idImage) {
+	    $conn = getNewConnection();
+
+	    $call = $conn->prepare("CALL getImage(?)", array(PDO::ATTR_CURSOR, PDO::CURSOR_FWDONLY));
+
+	    $call->bindParam(1, $idImage);
+
+	    $call->execute();
+
+	    $conn = null;
+	    return $call->fetchAll();
+    }
 ?>
