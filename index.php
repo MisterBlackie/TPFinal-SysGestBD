@@ -2,12 +2,12 @@
   session_start(); 
   if (!isset($_SESSION['pseudo'])) {
   	$_SESSION['msg'] = "You must log in first";
-  	header('location: login.php');
+  	header('location: Inscription/login.php');
   }
   if (isset($_GET['logout'])) {
   	session_destroy();
   	unset($_SESSION['pseudo']);
-  	header("location: login.php");
+  	header("location: Inscription/login.php");
   }
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 <head>
 	<title>Page Principal</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-		<p>Modiffier votre profil :
+		<p>Modifier votre profil :
 		
 		
 		<?php

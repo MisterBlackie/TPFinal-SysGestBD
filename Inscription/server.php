@@ -99,7 +99,7 @@ $bdd = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equi
   	if ($results == 1) {
   	  $_SESSION['pseudo'] = $pseudo;
   	  $_SESSION['success'] = "Vous etes connecté";
-  	  header('location: index.php');
+  	  header('location: ../index.php');
   	}else {
   		array_push($errors, "Le pseudonyme ou le mot de passe est incorect");
   	}
