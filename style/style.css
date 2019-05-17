@@ -184,3 +184,28 @@ font-size:18px
 .clear{
 clear:both
 }
+
+th {
+  border-bottom: 1px solid gray;
+}
+
+td, th {
+  padding: 10px 25px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.FooterLayout {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #465664;
+  padding: 10px;
+}
+
+.FooterLayout * {
+  color: white;
+}

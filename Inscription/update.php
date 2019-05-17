@@ -2,7 +2,7 @@
 <html>
 <head>
 <title></title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="../style/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -68,7 +68,7 @@ echo "</form>";
 if (isset($_GET['submit'])) {
 	echo '<div class="form" id="form3"><br><br><br><br><br><br>
 <Span>Compte modifié avec succès!!</span>
-<a href="index.php">retour</a></div>';
+<a href="../index.php">retour</a></div>';
 }
 if (isset($_GET['delete'])) {
 	echo '<div class="form" id="form3"><br><br><br><br><br><br>
@@ -79,7 +79,7 @@ if (isset($_GET['delete'])) {
 }
 
 if (isset($_GET['retour'])) {
-header('location:index.php');
+header('location:../43index.php');
 }
 ?>
 </div>

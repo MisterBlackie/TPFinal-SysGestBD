@@ -14,7 +14,7 @@
 <html>
 <head>
 	<title>Page Principal</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 		<p>Modifier votre profil :
 		
 		
@@ -32,7 +32,7 @@ password='$password', adresse='$adresse' where pseudo='$pseudo'");
 }
 $query = mysqli_query($connection , "select * from Membre where pseudo = '$profil' ");
 while ($row = mysqli_fetch_array($query)) {
-echo "<b><a href='update.php?update={$row['pseudo']}'>{$row['prenom']} {$row['nom']}</a></b>";
+echo "<b><a href='Inscription/update.php?update={$row['pseudo']}'>{$row['prenom']} {$row['nom']}</a></b>";
 echo "<br />";
 }
 ?>

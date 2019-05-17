@@ -9,6 +9,7 @@
 <html>
 	<head>
 		<title>Changement de mot de passe - Galerie Photo</title>
+        <link rel = "stylesheet" href = "../style/style.css">
 	</head>
 	
 	<body>
