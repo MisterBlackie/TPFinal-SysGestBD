@@ -30,7 +30,12 @@
         $height = $size["height"];
         $width = $size["width"];
 
-        echo("<img src = '$imageInfo[2]' height='$height' width='$width'/>");
+        echo ("<div class = 'imageBox clearfix'>");
+        echo ("<img src = '$imageInfo[2]' height='$height' width='$width'/>");
+        echo ("<h2>$imageInfo[0]</h2><br/>"); // Titre
+        echo ("<span class=\"glyphicon glyphicon-user\"></span><b>$imageInfo[3]</b><br/><br/>"); // Pseudo membre
+        echo ("<p>$imageInfo[1]</p>"); // Description
+        echo ("</div>");
 
     }
 ?>
@@ -38,6 +43,9 @@
 <html>
     <head>
         <title>Galerie photo</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
     </head>
 
