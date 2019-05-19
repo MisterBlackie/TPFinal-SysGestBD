@@ -13,74 +13,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+<?php include('Layout/Header.php') ?>
 	<title>Page Principal</title>
 	<link rel="stylesheet" type="text/css" href="style/style.css">
 		<p>Modifier votre profil :
 		
 		
-		<?php
-$connection = mysqli_connect("167.114.152.54", "equipe35", "264mqnh9", "dbequipe35");
+<?php
+$bdd = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
 $profil = $_SESSION['pseudo'];
-if (isset($_GET['submit'])) {
-$pseudo = $_GET['dpseudo'];
-$password = $_GET['dpassword'];
-$nom = $_GET['dnom'];
-$prenom = $_GET['dprenom'];
-$adresse = $_GET['dadresse'];
-$query = mysqli_query($connection ,"update Membre set
-password='$password', adresse='$adresse' where pseudo='$pseudo'");
-}
-$query = mysqli_query($connection , "select * from Membre where pseudo = '$profil' ");
-while ($row = mysqli_fetch_array($query)) {
+
+
+$stmt1 = $bdd->prepare("call getuserbypseudo(?)" , ARRAY(PDO::ATTR_CURSOR , PDO::CURSOR_FWDONLY));
+	$stmt1->bindParam(1,$pseudo);
+	$pseudo = $_SESSION['pseudo'];
+
+$stmt1->execute([$pseudo]); 
+while ($row = $stmt1->fetch()) {
 echo "<b><a href='Inscription/update.php?update={$row['pseudo']}'>{$row['prenom']} {$row['nom']}</a></b>";
 echo "<br />";
 }
+
 ?>
-</div><?php
-if (isset($_GET['update'])) {
-$update = $_GET['update'];
-$query1 = mysqli_query($connection , "select * from Membre where pseudo='$update'");
-while ($row1 = mysqli_fetch_array($query1)) {
-echo "<form class='form' method='get'>";
-echo "<h2>Update Form</h2>";
-echo "<hr/>";
-echo"<input class='input' type='hidden' name='dpseudo' value='{$row1['pseudo']}' />";
-echo "<br />";
-echo "<label>" . "password:" . "</label>" . "<br />";
-echo"<input class='input' type='text' name='dpassword' value='{$row1['password']}' />";
-echo "<br />";
-echo "<label>" . "nom:" . "</label>" . "<br />";
-echo"<input class='input' type='text' name='dnom' value='{$row1['nom']}' />";
-echo "<br />";
-echo "<label>" . "prenom:" . "</label>" . "<br />";
-echo"<input class='input' type='text' name='dprenom' value='{$row1['prenom']}' />";
-echo "<br />";
-echo "<label>" . "adresse:" . "</label>" . "<br />";
-echo"<input class='input' type='text' name='dadresse' value='{$row1['adresse']}' />";
-echo "</textarea>";
-echo "<br />";
-echo "<input class='submit' type='submit' name='submit' value='update' />";
-echo "</form>";
-}
-}
-if (isset($_GET['submit'])) {
-echo '<div class="form" id="form3"><br><br><br><br><br><br>
-<Span>Data Updated Successfuly......!!</span></div>';
-}
-?>
-<div class="clear"></div>
 </div>
-<div class="clear"></div>
 </div>
-</div><?php
-mysqli_close($connection);
-?>
+
 		
 </head>
 <body>
 
 <div class="header">
-	<h2>Page Principal</h2>
+	<h2>La gallerie d'images</h2>
 </div>
 <div class="content">
   	<!-- notification message -->
@@ -102,46 +65,6 @@ mysqli_close($connection);
 		
 		
     <?php endif ?>
-	
-	<?php 
-	$bdd = new PDO('mysql:host=167.114.152.54;dbname=dbequipe35;charset=utf8', 'equipe35', '264mqnh9');
-	$stmt1 = $bdd->prepare("select * from Image" );
-	$total = $stmt1->execute();
-	echo "<div class='grid-container'>";
-	while ($donnees = $stmt1->fetch())
-		{
-			$test = $donnees[3]; 
-			$image = $test;
-			$imageData = base64_encode(file_get_contents($image));
-			echo "<div class='grid-item'>";
-			echo '<img src="data:image/jpeg;base64,'.$imageData.' "style="width:200px;height:150px; padding:0px 10px 0px 10px;">';
-			echo "<br>";
-			echo "titre :".$donnees[1] ."<br> description". $donnees[2] . "<br> usager". $donnees[4]  . "<br> Date". $donnees[5];
-			
-			echo "</div>";
-}
-	echo "</div>";
-$stmt1->closeCursor();
-?>
-	
-	<form action="index.php" method="post"
-        enctype="multipart/form-data" >
-    <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
-    Fichier : <input name="fichier" size="35" type="file">	
-	<div class="input-group">
-  		<label>titre</label>
-  		<input type="text" name="titre" >
-  	</div>
-  	<div class="input-group">
-  		<label>description</label>
-  		<input type="textarea" name="description">
-  	</div>
-	<div class="input-group">
-	<button type="submit" class="btn" name="ajouter">Ajouter une photo</button>
-    </div>
-	</form>
-	
-	
 	
 	<?php
 	if (isset($_POST['ajouter']))
@@ -185,10 +108,55 @@ $stmt1 = $bdd->prepare("call InsertImage(?,?,?,?)" , ARRAY(PDO::ATTR_CURSOR , PD
 	
 	?>
 	
+	
+	<?php 
+	
+	$stmt1 = $bdd->prepare("call afficherimage" );
+	$total = $stmt1->execute();
+	echo "<div class='grid-container'>";
+	while ($donnees = $stmt1->fetch())
+		{
+			$test = $donnees[3]; 
+			$image = $test;
+			$imageData = base64_encode(file_get_contents($image));
+			echo "<div class='grid-item'>";
+			echo '<img src="data:image/jpeg;base64,'.$imageData.' "style="width:200px;height:150px; padding:0px 10px 0px 10px;">';
+			echo "<br>";
+			echo "titre :".$donnees[1] ."<br> description :". $donnees[2] . "<br> usager :". $donnees[4]  . "<br> Date :". $donnees[5];
+			
+			echo "</div>";
+}
+	echo "</div>";
+$stmt1->closeCursor();
+?>
+	</div>
+	<form action="index.php" method="post"
+        enctype="multipart/form-data" >
+    <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
+    Fichier : <input name="fichier" size="35" type="file">	
+	<div class="input-group">
+  		<label>titre</label>
+  		<input type="text" name="titre" >
+  	</div>
+  	<div class="input-group">
+  		<label>description</label>
+  		<input type="textarea" name="description">
+  	</div>
+	<div class="input-group">
+	<button type="submit" class="btn" name="ajouter">Ajouter une photo</button>
+    </div>
+	</form>
+	
+	
+	
+	
+	
 
 	
-</form>
-</div>
+
 		
 </body>
+<footer>
+<?php include('Layout/Footer.php') ?>
+</footer>
 </html>

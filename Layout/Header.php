@@ -5,6 +5,8 @@
 				<a class="navbar-brand" href="#">Galerie Photo</a>
 			</div>
 			
+		
+			
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="">Images</a></li>
 			</ul>
