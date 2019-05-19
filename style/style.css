@@ -8,7 +8,7 @@ body {
 }
 
 .header {
-  width: 30%;
+  width: 95%;
   margin: 50px auto 0px;
   color: white;
   background: #5F9EA0;
@@ -19,7 +19,7 @@ body {
   padding: 20px;
 }
 form, .content {
-  width: 70%;
+  width: 95%;
   margin: 10px auto;
   padding: 20px;
   border: 1px solid #B0C4DE;
@@ -29,14 +29,14 @@ form, .content {
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
 }
 
 .grid-item {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 2px;
-  font-size: 10px;
+  font-size: 20px;
   text-align: center;
 }
 
@@ -96,7 +96,8 @@ height:70px;
 text-shadow:2px 2px 2px #cfcfcf;
 font-size:16px;
 text-align:center;
-font-family:'Droid Serif',serif
+font-family:'Droid Serif',serif;
+color:red;
 }
 .divA{
 width:90%;
@@ -112,13 +113,13 @@ padding-left:30px
 }
 
 #form3{
-color:green;
+color:red;
 font-weight:700
 }
 p{
 font-weight:700;
 text-align:center;
-color:#5678C0;
+color:red;
 font-size:18px;
 text-shadow:2px 2px 2px #cfcfcf
 }
@@ -175,7 +176,7 @@ text-decoration:none;
 font-size:16px;
 margin:2px 0 0 30px;
 padding:3px;
-color:#1F8DD6
+color:red
 }
 a:hover{
 text-shadow:2px 2px 2px #cfcfcf;
@@ -199,7 +200,7 @@ table {
 }
 
 .FooterLayout {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   background-color: #465664;
@@ -225,4 +226,13 @@ table {
 
 .imageBox img {
   float: left;
+}
+
+.container-fluid
+{
+  color: white;
+  background: #5F9EA0;
+  border: 1px solid #B0C4DE;
+  border-bottom: none;
+  border-radius: 10px 10px 0px 0px;
 }
