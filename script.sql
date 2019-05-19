@@ -57,5 +57,5 @@ DROP PROCEDURE IF EXISTS getImage;
 DELIMITER |
 CREATE PROCEDURE getImage(IN PIdImage INT(11))
 BEGIN
-	SELECT Titre, Description, Url, Membre_Pseudo FROM Image;
+	SELECT Titre, Description, Url, Membre_Pseudo, DatePoster FROM Image;
 END |

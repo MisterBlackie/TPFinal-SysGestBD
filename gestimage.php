@@ -30,12 +30,10 @@
         $height = $size["height"];
         $width = $size["width"];
 
-        echo ("<div class = 'imageBox clearfix'>");
         echo ("<img src = '$imageInfo[2]' height='$height' width='$width'/>");
-        echo ("<h2>$imageInfo[0]</h2><br/>"); // Titre
+        echo ("<h2>$imageInfo[0]       $imageInfo[4]</h2><br/>"); // Titre
         echo ("<span class=\"glyphicon glyphicon-user\"></span><b>$imageInfo[3]</b><br/><br/>"); // Pseudo membre
         echo ("<p>$imageInfo[1]</p>"); // Description
-        echo ("</div>");
 
     }
 ?>
@@ -53,7 +51,9 @@
 
     <main>
         <div>
-            <?php showImage($_GET["gestImage_IdPhoto"]); ?>
+            <div class = 'imageBox clearfix'>
+                <?php showImage($_GET["gestImage_IdPhoto"]); ?>
+            </div>
         </div>
     </main>
 

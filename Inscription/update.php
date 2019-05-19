@@ -3,7 +3,9 @@
 <head>
 <title></title>
 <link href="../style/style.css" rel="stylesheet" type="text/css">
+<?php include('../Layout/Header.php') ?>
 </head>
+
 <body>
 
 <div class="title">
@@ -42,7 +44,7 @@ if (isset($_GET['delete'])) {
 </div><?php
 if (isset($_GET['update'])) {
 $update = $_GET['update'];
-$stmt1 = $bdd->prepare("select * from Membre where pseudo='$update'");
+$stmt1 = $bdd->prepare("call getuserbypseudo(?)");
 $stmt1->execute([$update]); 
 while ($row1 = $stmt1->fetch()) {
 echo "<form class='form' style='position:center' method='get'>";
@@ -79,7 +81,7 @@ if (isset($_GET['delete'])) {
 }
 
 if (isset($_GET['retour'])) {
-header('location:../43index.php');
+header('location:../index.php');
 }
 ?>
 </div>
@@ -88,4 +90,7 @@ header('location:../43index.php');
 
 ?>
 </body>
+<footer>
+<?php include('../Layout/Footer.php') ?>
+</footer>
 </html>
