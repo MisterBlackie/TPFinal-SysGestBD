@@ -68,4 +68,30 @@
 	    $conn = null;
 	    return $call->fetchAll();
     }
+
+    function getComments($idImage) {
+        $conn = getNewConnection();
+
+        $call = $conn->prepare("CALL getCommentaires(?)", array(PDO::ATTR_CURSOR, PDO::CURSOR_FWDONLY));
+        $call->bindParam(1, $idImage);
+
+        $call->execute();
+
+        $conn = null;
+        return $call->fetchAll();
+    }
+
+    function insertCommentaire($idImage, $pseudo, $commentaire) {
+        $conn = getNewConnection();
+
+        $call = $conn->prepare("CALL insertCommentaire(?, ?, ?)");
+
+        $call->bindParam(1, $idImage);
+        $call->bindParam(2, $pseudo);
+        $call->bindParam(3, $commentaire);
+
+        $call->execute();
+
+        $conn = null;
+    }
 ?>

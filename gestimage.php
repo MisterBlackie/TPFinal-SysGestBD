@@ -6,34 +6,18 @@
         exit();
     }
 
-    function determineIdealSize($imgUrl) {
-        $actualSize = getimagesize($imgUrl);
-
-        if ($actualSize[0] > $actualSize[1]) {
-            $idealSize["height"] = 600;
-            $idealSize["width"] = 800;
-        } else if ($actualSize[0] < $actualSize[1]) {
-            $idealSize["height"] = 800;
-            $idealSize["width"] = 600;
-        } else {
-            $idealSize["height"] = 600;
-            $idealSize["width"] = 600;
-        }
-
-        return $idealSize;
-    }
-
     function showImage($id) {
         $imageInfo = getImage($id)[0];
 
-        $size = determineIdealSize($imageInfo[2]);
-        $height = $size["height"];
-        $width = $size["width"];
+        echo ("<img src = '$imageInfo[2]' />");
+        echo ("<h2 style = 'display: inline-block;'>$imageInfo[0]</h2> <h3 class = 'date'>$imageInfo[4]</h3><br/>"); // Titre
+        echo ("Auteur: <b>$imageInfo[3]</b><br/><br/>"); // Pseudo membre
+        echo ("Description: <br/><p style = 'text-align:justify;'>$imageInfo[1]</p>"); // Description
+    }
 
-        echo ("<img src = '$imageInfo[2]' height='$height' width='$width'/>");
-        echo ("<h2>$imageInfo[0]       $imageInfo[4]</h2><br/>"); // Titre
-        echo ("<span class=\"glyphicon glyphicon-user\"></span><b>$imageInfo[3]</b><br/><br/>"); // Pseudo membre
-        echo ("<p>$imageInfo[1]</p>"); // Description
+    function showCommentSection($id) {
+        $comment = getComments($id)[0];
+
 
     }
 ?>
@@ -47,15 +31,16 @@
 
     </head>
 
-    <?php include("Layout/Header.php") ?>
-
-    <main>
-        <div>
+    <body>
+        <?php include("Layout/Header.php") ?>
+        <main>
             <div class = 'imageBox clearfix'>
                 <?php showImage($_GET["gestImage_IdPhoto"]); ?>
-            </div>
-        </div>
-    </main>
 
-    <?php include("Layout/Footer.php"); ?>
+                <?php showCommentSection($_GET["gestImage_IdPhoto"]); ?>
+            </div>
+        </main>
+
+        <?php include("Layout/Footer.php"); ?>
+    </body>
 </html>

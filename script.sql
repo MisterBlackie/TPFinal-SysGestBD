@@ -1,5 +1,16 @@
 USE dbequipe35;
 
+CREATE TABLE `dbequipe35`.`Commentaires` (
+    `IdCommentaire` INT NOT NULL AUTO_INCREMENT,
+    `pseudoMembre` VARCHAR(30) NOT NULL,
+    `IdImage` INT(11) NOT NULL,
+    `Commentaire` TINYTEXT NOT NULL,
+    `Date` DATETIME NOT NULL,
+    FOREIGN KEY FK_Membre(pseudoMembre) REFERENCES Membre(pseudo),
+    FOREIGN KEY FK_IdImage(IdImage) REFERENCES Image(idImage),
+    PRIMARY KEY (`IdCommentaire`)
+) ENGINE = InnoDB
+
 DROP PROCEDURE IF EXISTS getUsers;
 DELIMITER |
 CREATE PROCEDURE getUsers()
@@ -57,5 +68,19 @@ DROP PROCEDURE IF EXISTS getImage;
 DELIMITER |
 CREATE PROCEDURE getImage(IN PIdImage INT(11))
 BEGIN
-	SELECT Titre, Description, Url, Membre_Pseudo, DatePoster FROM Image;
+	SELECT Titre, Description, Url, Membre_Pseudo, DatePoster FROM Image WHERE idImage = PIdImage;
+END |
+
+DROP PROCEDURE IF EXISTS getCommentaires;
+DELIMITER |
+CREATE PROCEDURE getCommentaires(IN PIdImage INT(11))
+BEGIN
+	SELECT IdCommentaire, pseudoMembre, Commentaire, Date FROM Commentaires WHERE IdImage = PIdImage;
+END |
+
+DROP PROCEDURE IF EXISTS insertCommentaire;
+DELIMITER |
+CREATE PROCEDURE insertCommentaire(IN PIdImage INT(11), IN PPseudo VARCHAR(30), IN PCommentaire TINYTEXT)
+BEGIN
+	INSERT INTO Commentaires(IdImage, pseudoMembre, Commentaire, Date) VALUES(PIdImage, PPseudo, PCommentaire, NOW());
 END |
