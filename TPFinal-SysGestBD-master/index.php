@@ -133,14 +133,14 @@ $stmt1->closeCursor();
 	<form action="index.php" method="post"
         enctype="multipart/form-data" >
     <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
-    Fichier : <input name="fichier" size="35" type="file">	
+    Fichier : <input name="fichier" size="35" type="file" required="required">	
 	<div class="input-group">
   		<label>titre</label>
-  		<input type="text" name="titre" >
+  		<input type="text" name="titre" required="required" >
   	</div>
   	<div class="input-group">
   		<label>description</label>
-  		<input type="textarea" name="description">
+  		<input type="textarea" name="description" required="required">
   	</div>
 	<div class="input-group">
 	<button type="submit" class="btn" name="ajouter">Ajouter une photo</button>
