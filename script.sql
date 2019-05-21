@@ -75,7 +75,7 @@ DROP PROCEDURE IF EXISTS getCommentaires;
 DELIMITER |
 CREATE PROCEDURE getCommentaires(IN PIdImage INT(11))
 BEGIN
-	SELECT IdCommentaire, pseudoMembre, Commentaire, Date FROM Commentaires WHERE IdImage = PIdImage;
+	SELECT IdCommentaire, pseudoMembre, Commentaire, Date FROM Commentaires WHERE IdImage = PIdImage ORDER BY Date;
 END |
 
 DROP PROCEDURE IF EXISTS insertCommentaire;

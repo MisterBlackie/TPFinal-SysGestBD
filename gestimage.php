@@ -1,9 +1,24 @@
 <?php
     require ("DBFunction.php");
+    session_start();
 
-    if (!isset($_GET["gestImage_IdPhoto"])) {
+    if (!isset($_SESSION['pseudo'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: Inscription/login.php');
+    }
+
+    if (!isset($_GET["gestImage_IdPhoto"]) && !isset($_POST["gestImage_IdPhoto"])) {
         header("Location: index.php");
         exit();
+    }
+
+    if (isset($_POST["gestImage_AddComment"])) {
+        $comment = $_POST["comment"];
+        if (strlen($comment) > 155 || strlen($comment) == 0) {
+            $_POST["ErrorMessage"] = "Le commentaire doit contenir entre 1 et 155 caractères.";
+        } else {
+            insertCommentaire($_POST["gestImage_IdPhoto"], $_SESSION['pseudo'], $comment);
+        }
     }
 
     function showImage($id) {
@@ -16,9 +31,11 @@
     }
 
     function showCommentSection($id) {
-        $comment = getComments($id)[0];
+        $comments = getComments($id);
 
-
+        foreach ($comments as $comment) {
+            echo("<div class = 'comment'> Auteur: $comment[1] <br/> $comment[2]<br/></div>");
+        }
     }
 ?>
 
@@ -36,6 +53,19 @@
         <main>
             <div class = 'imageBox clearfix'>
                 <?php showImage($_GET["gestImage_IdPhoto"]); ?>
+            </div>
+
+            <div class = "commentSection">
+                <form name = 'gestImage_AddComment' method = "POST">
+                    <input type = 'hidden' name = 'gestImage_IdPhoto' value = '<?php $_GET["gestImage_IdPhoto"]; ?>' />
+                    <?php
+                    if (isset($_POST["errorMessage"])) {
+                        $error = $_POST["errorMessage"];
+                        echo ("<label for = 'comment'>$error</label>");
+                    }
+                    ?>
+                    <textarea name = 'comment' id = 'comment' required></textarea>
+                </form>
 
                 <?php showCommentSection($_GET["gestImage_IdPhoto"]); ?>
             </div>
