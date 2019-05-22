@@ -12,12 +12,15 @@
         exit();
     }
 
+    // On prend l'id dans une variable (On a vérifié si au moins un id était set plus haut)
+    $idPhoto = isset($_GET["gestImage_IdPhoto"]) ? $_GET["gestImage_IdPhoto"] : $_POST["gestImage_IdPhoto"];
+
     if (isset($_POST["gestImage_AddComment"])) {
         $comment = $_POST["comment"];
         if (strlen($comment) > 155 || strlen($comment) == 0) {
             $_POST["ErrorMessage"] = "Le commentaire doit contenir entre 1 et 155 caractères.";
         } else {
-            insertCommentaire($_POST["gestImage_IdPhoto"], $_SESSION['pseudo'], $comment);
+            insertCommentaire($idPhoto, $_SESSION['pseudo'], $comment);
         }
     }
 
@@ -56,18 +59,19 @@
             </div>
 
             <div class = "commentSection">
-                <form name = 'gestImage_AddComment' method = "POST">
-                    <input type = 'hidden' name = 'gestImage_IdPhoto' value = '<?php $_GET["gestImage_IdPhoto"]; ?>' />
+                <form method = "POST">
+                    <input type = 'hidden' name = 'gestImage_IdPhoto' value = '<?php echo($idPhoto); ?>' />
                     <?php
-                    if (isset($_POST["errorMessage"])) {
-                        $error = $_POST["errorMessage"];
+                    if (isset($_POST["ErrorMessage"])) {
+                        $error = $_POST["ErrorMessage"];
                         echo ("<label for = 'comment'>$error</label>");
                     }
                     ?>
                     <textarea name = 'comment' id = 'comment' required></textarea>
+                    <input type = "submit" name = "gestImage_AddComment" />
                 </form>
 
-                <?php showCommentSection($_GET["gestImage_IdPhoto"]); ?>
+                <?php showCommentSection($idPhoto); ?>
             </div>
         </main>
 
