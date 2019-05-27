@@ -74,7 +74,7 @@
      
     </body>
 	
-	<footer style="  position: fixed;
+	<footer style="  position: relative;
    left: 0;
    bottom: 0; width:100%">
 <?php include('Layout/Footer.php') ?>
