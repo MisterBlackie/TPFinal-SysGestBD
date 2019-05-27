@@ -40,7 +40,7 @@
         $comments = getComments($id);
 
         foreach ($comments as $comment) {
-            echo("<div class = 'comment'> Auteur: $comment[1] <br/> $comment[2]<br/></div>");
+            echo("<div class = 'comment'> Auteur: $comment[1]   Date: $comment[3]<br/> $comment[2]<br/></div>");
         }
     }
 ?>
