@@ -43,7 +43,7 @@ echo "<br />";
 <body>
 
 <div class="header">
-	<h2>La gallerie d'images</h2>
+	<h2>La galerie d'images</h2>
 </div>
 <div class="content">
   	<!-- notification message -->

@@ -84,3 +84,10 @@ CREATE PROCEDURE insertCommentaire(IN PIdImage INT(11), IN PPseudo VARCHAR(30), 
 BEGIN
 	INSERT INTO Commentaires(IdImage, pseudoMembre, Commentaire, Date) VALUES(PIdImage, PPseudo, PCommentaire, NOW());
 END |
+
+DROP PROCEDURE IF EXISTS deleteUser;
+DELIMITER |
+CREATE PROCEDURE deleteUser(IN PId INT(11))
+BEGIN
+	DELETE FROM Image WHERE idImage=PId;
+END |

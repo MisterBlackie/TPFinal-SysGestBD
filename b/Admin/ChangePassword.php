@@ -17,9 +17,9 @@
 			<form method = "POST" action = "ChangePassword.php">
 				<input type = "text" name = "User" value = "<?php echo $_GET["user"] ?>" style = "display: none;">
 				Changer le mot de passe de <?php echo $_GET["user"] ?> <br/>
-				<input type = "text" id = "PwdField" name = "newPassword"><br/>
+				<input type = "password" id = "PwdField" name = "newPassword"><br/>
 				Confirmation: <br/>
-				<input type = "text" id = "ConfirmPwd"><br/><br/>
+				<input type = "password" id = "ConfirmPwd"><br/><br/>
 				<input type = "submit" name = "ChangePassword" value = "Submit" onclick = "return CheckPasswordAndConfirmation()">
 			</form>
 		</main>

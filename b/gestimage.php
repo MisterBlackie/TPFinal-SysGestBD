@@ -18,6 +18,9 @@
         } else {
             insertCommentaire($idPhoto, $_SESSION['pseudo'], $comment);
         }
+    } else if (isset($_POST["deleteImage"])) {
+        deleteImage($idPhoto);
+        header("Location: index.php");
     }
 
     function showImage($id) {
@@ -27,6 +30,10 @@
         echo ("<h2 style = 'display: inline-block;'>$imageInfo[0]</h2> <h3 class = 'date'>$imageInfo[4]</h3><br/>"); // Titre
         echo ("Auteur: <b>$imageInfo[3]</b><br/><br/>"); // Pseudo membre
         echo ("Description: <br/><p style = 'text-align:justify;'>$imageInfo[1]</p>"); // Description
+
+        if ($_SESSION["pseudo"] == $imageInfo[3]) {
+            echo ("<button type = 'button' onclick = 'document.getElementById(\"deleteForm\").submit();'>Supprimer</button>");
+        }
     }
 
     function showCommentSection($id) {
@@ -48,6 +55,10 @@
     </head>
 
     <body>
+        <form id = "deleteForm" method = "POST">
+            <input name = "deleteImage" />
+            <input type = 'hidden' name = 'gestImage_IdPhoto' value = '<?php echo($idPhoto); ?>' />
+        </form>
         <?php include("Layout/Header.php") ?>
         <main>
             <div class = 'imageBox clearfix'>

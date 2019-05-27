@@ -45,8 +45,6 @@
 					<?php listUsers(); ?>
 				</table>
 		</main>
-		
-		<?php include("../layout/footer.php"); ?>
 	</body>
 </html>
 

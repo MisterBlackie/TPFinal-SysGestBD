@@ -94,4 +94,16 @@
 
         $conn = null;
     }
+
+// deleteImage: supprime l'imade  de la base de donnée
+function deleteImage($Id) {
+    $conn = getNewConnection();
+
+    $call = $conn->prepare("CALL deleteImage(?)");
+    $call->bindParam(1, $Id);
+
+    $call->execute();
+
+    $conn = null;
+}
 ?>

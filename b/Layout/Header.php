@@ -19,7 +19,11 @@
 			</ul>
 			<?php }
 			else {
+				include_once("DBFunction.php");
+				if (isAdmin($_SESSION['pseudo'])) {
 			?>
+				<li class = "active"><a href = "Admin/Admin.php">Administration</a></li>
+		<?php } ?>
 			<a href="index.php?logout='1'" style="color: red;">Se Déconnecter</a>
 			<?php }
 			?>
